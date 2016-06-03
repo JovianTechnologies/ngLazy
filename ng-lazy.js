@@ -10,8 +10,6 @@ angular.module('ngLazyL', [])
             template: '@',
             loadPoint: '@',
             pageSize: '@',
-            height: '@',
-            width: '@',
             items: '='
         },
         link: function(scope, elem, attrs){
@@ -20,16 +18,13 @@ angular.module('ngLazyL', [])
 
             //set defaults
             if(!scope.loadPoint) scope.loadPoint = .7;
-            if(!scope.pageSize) scope.pageSize = 15;
-            if(!scope.height) scope.height = '500px';
-            if(!scope.width) scope.width = '300px';
+            if(!scope.pageSize) scope.pageSize = 5;
 
             loadNextPage(true);
 
-
             $($(elem.parent())).on('scroll', function(){
                 if($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight * scope.loadPoint)
-                loadNextPage(false);
+                loadNextPage();
                 scope.$digest();
             });
 

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../../bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="../../bower_components/angular/angular.min.js"></script>
+    <script src="../../bower_components/angular-route/angular-route.min.js"></script>
+    <script src="../../ng-lazy.js"></script>
+    <script>
+        var app = angular.module('app', ['ngLazyL']);
+
+        app.controller('testCtrl', function($scope){
+            $scope.list = [];
+            $scope.list2 = [];
+
+            for(var i = 0; i < 100; i++){
+                $scope.list.push({name: "test " + i});
+                $scope.list2.push({name: "test " + (i + 200)});
+            }
+        });
+    </script>
+</head>
+<body ng-controller="testCtrl">
+    <button ng-click="filter()">Change List</button>
+    <div style="width:300px; height: 250px; overflow: scroll">
+        <ng-lazy template="template.html" items="list"></ng-lazy>
+    </div>
+    <div style="width:300px; height: 250px; overflow: scroll">
+        <ng-lazy template="template.html" items="list2"></ng-lazy>
+    </div>
+</body>
+</html>

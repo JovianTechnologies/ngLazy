@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../../bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="../../bower_components/angular/angular.min.js"></script>
+    <script src="../../bower_components/angular-route/angular-route.min.js"></script>
+    <script src="../../ng-lazy.js"></script>
+    <script>
+        var app = angular.module('app', ['ngLazyL']);
+
+        app.controller('testCtrl', function($scope){
+            $scope.list = ['1.html', '2.html', '3.html'];
+        });
+    </script>
+</head>
+<body ng-controller="testCtrl">
+<div style="width:300px; height: 250px; overflow: scroll">
+    <ng-lazy template="template.html" items="list" page-size="2"></ng-lazy>
+</div>
+</body>
+</html>
