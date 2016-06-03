@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="app">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -8,10 +8,30 @@
     <script src="bower_components/angular-route/angular-route.min.js"></script>
     <script src="ng-lazy.js"></script>
     <script>
-        var app = angular.module('app', [])
+        var app = angular.module('app', ['ngLazyL']);
+
+        app.controller('testCtrl', function($scope){
+            restoreItems();
+            function restoreItems(){
+                $scope.items = [];
+                for(var i = 0; i < 100; i++){
+                    $scope.items.push({name: "test " + i});
+                }
+            }
+
+
+            $scope.filter = function(){
+                if($scope.items.length == 100) $scope.items = $scope.items.slice(0, 1);
+                else restoreItems();
+            }
+        });
     </script>
 </head>
-<body>
+<body ng-controller="testCtrl">
+    <button ng-click="filter()">Change List</button>
+    <div style="width:300px; height: 500px; overflow: scroll">
+        <ng-lazy template="template.html" loadPoint=".3" items="items"></ng-lazy>
+    </div>
 
 </body>
 </html>
