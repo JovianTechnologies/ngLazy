@@ -24,15 +24,12 @@ angular.module('ngLazyL', [])
             if(!scope.height) scope.height = '500px';
             if(!scope.width) scope.width = '300px';
 
-
-            scope.currentPage = 1;
-            loadNextPage();
+            loadNextPage(true);
 
 
             $($(elem.parent())).on('scroll', function(){
                 if($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight * scope.loadPoint)
-                scope.currentPage++;
-                loadNextPage();
+                loadNextPage(false);
                 scope.$digest();
             });
 
@@ -41,11 +38,13 @@ angular.module('ngLazyL', [])
             });
 
             scope.$watchCollection('items', function(newVal, oldVal){
-                scope.currentPage = 1;
-                loadNextPage();
+                loadNextPage(true);
             });
 
-            function loadNextPage(){
+            function loadNextPage(listChanged){
+                if(!scope.currentPage || listChanged) scope.currentPage = 1;
+                else scope.currentPage++;
+
                 scope.displayedItems = scope.items.slice(0, scope.currentPage * scope.pageSize);
             }
         },
